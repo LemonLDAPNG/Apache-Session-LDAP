@@ -45,12 +45,12 @@ Apache::Session::LDAP - An implementation of Apache::Session
 
 =head1 DESCRIPTION
 
-This module is an implementation of Apache::Session.  It uses an LDAP directory
+This module is an implementation of Apache::Session. It uses an LDAP directory
 to store datas.
 
 =head1 AUTHOR
 
-Xavier Guimard, E<lt>guimard@E<gt>
+Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
