@@ -36,7 +36,7 @@ Apache::Session::LDAP - An implementation of Apache::Session
 =head1 SYNOPSIS
 
   use Apache::Session::LDAP;
-  tie %hash, 'Apache::Session::DB_File', $id, {
+  tie %hash, 'Apache::Session::LDAP', $id, {
     ldapServer       => 'ldap://localhost:389',
     ldapConfBase     => 'dmdName=applications,dc=example,dc=com',
     ldapBindDN       => 'cn=admin,dc=example,dc=com',
