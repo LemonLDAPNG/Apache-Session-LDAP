@@ -7,3 +7,6 @@ Revision history for Perl extension Apache::Session::LDAP.
 0.1   Wed Dec 8 16:30:32 2010
 	- change serialization
 
+0.2   Tue Jun 26 06:15:12 2012
+	- remove inappropriate comment
+

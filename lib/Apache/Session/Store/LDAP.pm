@@ -1,19 +1,10 @@
-#############################################################################
-#
-# Apache::Session::Store::DB_File
-# Implements session object storage via Perl's DB_File module
-# Copyright(c) 2000 Jeffrey William Baker (jwbaker@acm.org)
-# Distribute under the Perl License
-#
-############################################################################
-
 package Apache::Session::Store::LDAP;
 
 use strict;
 use vars qw($VERSION);
 use Net::LDAP;
 
-$VERSION = '0.1';
+$VERSION = '0.2';
 
 sub new {
     my $class = shift;
@@ -187,7 +178,7 @@ Xavier Guimard, E<lt>guimard@E<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2009 by Xavier Guimard
+Copyright (C) 2009, 2012 by Xavier Guimard
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10.0 or,
