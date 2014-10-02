@@ -24,6 +24,8 @@ sub insert {
             description => $session->{serialized},
         ],
     );
+
+    $self->ldap->unbind() && delete $self->{ldap};
     $self->logError($msg) if ( $msg->code );
 }
 
@@ -37,6 +39,7 @@ sub update {
         replace => { description => $session->{serialized}, },
     );
 
+    $self->ldap->unbind() && delete $self->{ldap};
     $self->logError($msg) if ( $msg->code );
 }
 
@@ -53,6 +56,7 @@ sub materialize {
         attrs  => ['description'],
     );
 
+    $self->ldap->unbind() && delete $self->{ldap};
     $self->logError($msg) if ( $msg->code );
 
     eval {
@@ -71,6 +75,8 @@ sub remove {
 
     $self->ldap->delete(
         "cn=$session->{data}->{_session_id}," . $self->{args}->{ldapConfBase} );
+
+    $self->ldap->unbind() && delete $self->{ldap};
 }
 
 sub ldap {
