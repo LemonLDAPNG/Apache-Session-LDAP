@@ -4,7 +4,7 @@ use strict;
 use vars qw(@ISA $VERSION);
 
 $VERSION = '0.3';
-@ISA = qw(Apache::Session);
+@ISA     = qw(Apache::Session);
 
 use Apache::Session;
 use Apache::Session::Lock::Null;
