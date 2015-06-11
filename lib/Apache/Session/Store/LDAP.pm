@@ -4,7 +4,7 @@ use strict;
 use vars qw($VERSION);
 use Net::LDAP;
 
-$VERSION = '0.3';
+$VERSION = '0.4';
 
 sub new {
     my $class = shift;
@@ -15,13 +15,18 @@ sub insert {
     my $self    = shift;
     my $session = shift;
     $self->{args} = $session->{args};
+    $self->{args}->{ldapObjectClass}      ||= 'applicationProcess';
+    $self->{args}->{ldapAttributeId}      ||= 'cn';
+    $self->{args}->{ldapAttributeContent} ||= 'description';
 
     my $msg = $self->ldap->add(
-        "cn=$session->{data}->{_session_id}," . $self->{args}->{ldapConfBase},
+        $self->{args}->{ldapAttributeId} . "="
+          . $session->{data}->{_session_id} . ","
+          . $self->{args}->{ldapConfBase},
         attrs => [
-            objectClass => [ 'top', 'applicationProcess' ],
-            cn          => $session->{data}->{_session_id},
-            description => $session->{serialized},
+            objectClass => $self->{args}->{ldapObjectClass},
+            $self->{args}->{ldapAttributeId} => $session->{data}->{_session_id},
+            $self->{args}->{ldapAttributeContent} => $session->{serialized},
         ],
     );
 
@@ -33,10 +38,16 @@ sub update {
     my $self    = shift;
     my $session = shift;
     $self->{args} = $session->{args};
+    $self->{args}->{ldapObjectClass}      ||= 'applicationProcess';
+    $self->{args}->{ldapAttributeId}      ||= 'cn';
+    $self->{args}->{ldapAttributeContent} ||= 'description';
 
     my $msg = $self->ldap->modify(
-        "cn=$session->{data}->{_session_id}," . $self->{args}->{ldapConfBase},
-        replace => { description => $session->{serialized}, },
+        $self->{args}->{ldapAttributeId} . "="
+          . $session->{data}->{_session_id} . ","
+          . $self->{args}->{ldapConfBase},
+        replace =>
+          { $self->{args}->{ldapAttributeContent} => $session->{serialized}, },
     );
 
     $self->ldap->unbind() && delete $self->{ldap};
@@ -47,20 +58,25 @@ sub materialize {
     my $self    = shift;
     my $session = shift;
     $self->{args} = $session->{args};
+    $self->{args}->{ldapObjectClass}      ||= 'applicationProcess';
+    $self->{args}->{ldapAttributeId}      ||= 'cn';
+    $self->{args}->{ldapAttributeContent} ||= 'description';
 
     my $msg = $self->ldap->search(
-        base => "cn=$session->{data}->{_session_id},"
+        base => $self->{args}->{ldapAttributeId} . "="
+          . $session->{data}->{_session_id} . ","
           . $self->{args}->{ldapConfBase},
-        filter => '(objectClass=applicationProcess)',
+        filter => '(objectClass=' . $self->{args}->{ldapObjectClass} . ')',
         scope  => 'base',
-        attrs  => ['description'],
+        attrs  => [ $self->{args}->{ldapAttributeContent} ],
     );
 
     $self->ldap->unbind() && delete $self->{ldap};
     $self->logError($msg) if ( $msg->code );
 
     eval {
-        $session->{serialized} = $msg->shift_entry()->get_value('description');
+        $session->{serialized} = $msg->shift_entry()
+          ->get_value( $self->{args}->{ldapAttributeContent} );
     };
 
     if ( !defined $session->{serialized} ) {
@@ -72,9 +88,13 @@ sub remove {
     my $self    = shift;
     my $session = shift;
     $self->{args} = $session->{args};
+    $self->{args}->{ldapObjectClass}      ||= 'applicationProcess';
+    $self->{args}->{ldapAttributeId}      ||= 'cn';
+    $self->{args}->{ldapAttributeContent} ||= 'description';
 
-    $self->ldap->delete(
-        "cn=$session->{data}->{_session_id}," . $self->{args}->{ldapConfBase} );
+    $self->ldap->delete( $self->{args}->{ldapAttributeId} . "="
+          . $session->{data}->{_session_id} . ","
+          . $self->{args}->{ldapConfBase} );
 
     $self->ldap->unbind() && delete $self->{ldap};
 }
@@ -167,15 +187,19 @@ objects are stored in an LDAP directory file using the Net::LDAP Perl module.
 =head1 OPTIONS
 
 This module requires one argument in the usual Apache::Session style. The
-keys ldapServer, ldapBase, ldapBindDN, ldapBindPassword are required. The key
-ldapPort is optional. Example:
+keys ldapServer, ldapBase, ldapBindDN, ldapBindPassword are required. The keys
+ldapPort, ldapObjectClass, ldapAttributeId, ldapAttributeContent are optional. 
+Example:
 
  tie %s, 'Apache::Session::LDAP', undef,
     {
-        ldapServer       => 'localhost',
-        ldapBase         => 'dc=example,dc=com',
-        ldapBindDN       => 'cn=admin,dc=example,dc=com',
-        ldapBindPassword => 'pass',
+        ldapServer           => 'localhost',
+        ldapBase             => 'dc=example,dc=com',
+        ldapBindDN           => 'cn=admin,dc=example,dc=com',
+        ldapBindPassword     => 'pass',
+        ldapObjectClass      => 'applicationProcess',
+        ldapAttributeId      => 'cn',
+        ldapAttributeContent => 'description',
     };
 
 =head1 AUTHOR
@@ -185,7 +209,7 @@ Xavier Guimard, E<lt>guimard@E<gt>
 =head1 COPYRIGHT AND LICENSE
 
 Copyright (C) 2009, 2012 by Xavier Guimard
-Copyright (C) 2014 by Clement Oudot
+Copyright (C) 2014, 2015 by Clement Oudot
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10.0 or,

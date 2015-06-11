@@ -3,7 +3,7 @@ package Apache::Session::LDAP;
 use strict;
 use vars qw(@ISA $VERSION);
 
-$VERSION = '0.3';
+$VERSION = '0.4';
 @ISA     = qw(Apache::Session);
 
 use Apache::Session;
@@ -37,10 +37,13 @@ Apache::Session::LDAP - An implementation of Apache::Session
 
   use Apache::Session::LDAP;
   tie %hash, 'Apache::Session::LDAP', $id, {
-    ldapServer       => 'ldap://localhost:389',
-    ldapConfBase     => 'dmdName=applications,dc=example,dc=com',
-    ldapBindDN       => 'cn=admin,dc=example,dc=com',
-    ldapBindPassword => 'pass',
+    ldapServer           => 'ldap://localhost:389',
+    ldapConfBase         => 'dmdName=applications,dc=example,dc=com',
+    ldapBindDN           => 'cn=admin,dc=example,dc=com',
+    ldapBindPassword     => 'pass',
+    ldapObjectClass      => 'applicationProcess',
+    ldapAttributeId      => 'cn',
+    ldapAttributeContent => 'description',
   };
 
 =head1 DESCRIPTION
@@ -55,7 +58,7 @@ Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 =head1 COPYRIGHT AND LICENSE
 
 Copyright (C) 2009, 2012 by Xavier Guimard
-Copyright (C) 2014 by Clement Oudot
+Copyright (C) 2014, 2015 by Clement Oudot
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10.0 or,
