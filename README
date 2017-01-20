@@ -1,5 +1,7 @@
-Apache-Session-LDAP version 0.4
-================================
+Apache-Session-LDAP
+===================
+
+[![Build Status](https://travis-ci.org/LemonLDAPNG/Apache-Session-LDAP.svg?branch=master)](https://travis-ci.org/LemonLDAPNG/Apache-Session-LDAP)
 
 INSTALLATION
 ------------
