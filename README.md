@@ -1,34 +1,25 @@
-Apache-Session-LDAP
-===================
+# Apache::Session::LDAP
 
 [![Build Status](https://travis-ci.org/LemonLDAPNG/Apache-Session-LDAP.svg?branch=master)](https://travis-ci.org/LemonLDAPNG/Apache-Session-LDAP)
 
-INSTALLATION
-------------
+Store sessions in an LDAP directory.
+
+## Installation
 
 To install this module type the following:
+```̀ 
+perl Makefile.PL
+make
+make test
+make install
+```̀ 
 
-   perl Makefile.PL
-   make
-   make test
-   make install
-
-DEPENDENCIES
-------------
+## Dependencies
 
 This module requires these other modules and libraries:
+* Apache::Session
+* Net::LDAP
 
-  Apache::Session
-  Net::LDAP
+## CPAN
 
-COPYRIGHT AND LICENCE
----------------------
-
-Copyright (C) 2009, 2012 by Xavier Guimard
-Copyright (C) 2014 by Clement Oudot
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.10.0 or,
-at your option, any later version of Perl 5 you may have available.
-
-
+See http://search.cpan.org/dist/Apache-Session-LDAP/
