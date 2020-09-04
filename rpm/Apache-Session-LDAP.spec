@@ -3,7 +3,7 @@
 #==============================================================================
 
 %define real_name Apache-Session-LDAP
-%define real_version 0.4
+%define real_version 0.5
 
 #==============================================================================
 # Main package
@@ -57,6 +57,8 @@ find %{buildroot} -name perllocal.pod -exec rm -f {} \;
 %{perl_vendorlib}/Apache/Session/Store/LDAP.pm
 
 %changelog
+* Fri Sep 04 2020 Clement Oudot <clem.oudot@gmail.com> - 0.5-1
+- Update to 0.5
 * Tue Jan 23 2018 Clement Oudot <clem.oudot@gmail.com> - 0.4-1
 - Update to 0.4
 * Mon Jan 12 2015 Clement Oudot <clem.oudot@gmail.com> - 0.3-1
