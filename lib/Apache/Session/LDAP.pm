@@ -44,6 +44,8 @@ Apache::Session::LDAP - An implementation of Apache::Session
     ldapObjectClass      => 'applicationProcess',
     ldapAttributeId      => 'cn',
     ldapAttributeContent => 'description',
+    ldapVerify           => 'require',
+    ldapCAFile           => '/etc/ssl/certs/ca-certificates.crt',
   };
 
 =head1 DESCRIPTION
