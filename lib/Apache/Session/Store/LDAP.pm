@@ -148,8 +148,7 @@ sub ldap {
         if (    $ldap->socket->isa('IO::Socket::SSL')
             and $ldap->socket->errstr < 0 )
         {
-            $self->logError( "SSL connection error: " . $ldap->socket->errstr );
-            return;
+            die( "SSL connection error: " . $ldap->socket->errstr );
         }
     }
 
