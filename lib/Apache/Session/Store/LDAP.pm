@@ -4,7 +4,7 @@ use strict;
 use vars qw($VERSION);
 use Net::LDAP;
 
-$VERSION = '0.4';
+$VERSION = '0.5';
 
 sub new {
     my $class = shift;

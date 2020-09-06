@@ -3,7 +3,7 @@ package Apache::Session::LDAP;
 use strict;
 use vars qw(@ISA $VERSION);
 
-$VERSION = '0.4';
+$VERSION = '0.5';
 @ISA     = qw(Apache::Session);
 
 use Apache::Session;
