@@ -57,7 +57,7 @@ find %{buildroot} -name perllocal.pod -exec rm -f {} \;
 %{perl_vendorlib}/Apache/Session/Store/LDAP.pm
 
 %changelog
-* Fri Sep 04 2020 Clement Oudot <clem.oudot@gmail.com> - 0.5-1
+* Sun Sep 06 2020 Clement Oudot <clem.oudot@gmail.com> - 0.5-1
 - Update to 0.5
 * Tue Jan 23 2018 Clement Oudot <clem.oudot@gmail.com> - 0.4-1
 - Update to 0.4
